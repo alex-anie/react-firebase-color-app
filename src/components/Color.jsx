@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react'
 import db from '../firebase'
+import {onSnapshot, collection} from 'firebase/firestore'
+import {handleEdit, handleNew, handleDelete, handleQueryDelete } from './Utility'
+import Dot from "./Dot"
 
 import './color.css'
 
-//::: i imported this function 
-import { onSnapshot, collection, setDoc, doc, add } from 'firebase/firestore'
-
-const Dot = ({color})=> {
-  const style = {
-    height: 10,
-    width: 10,
-    margin: "0px 10px",
-    backgroundColor : color,
-    borderRadius: "50%",
-    display: "inline-block"
-  }
-
-  return <span style={style}></span>
-}
 
 //here I'm using colection to target an entire collection 
 
@@ -37,22 +25,19 @@ export default function Color() {
   []
   );
 
-  const handleNew = async () => {
-    const docRef = doc(db, "colors", "color001");
-    const payload = {name: "Black", value: "#000"};
-    await setDoc(docRef, payload);
-  }
-
   return (
     <>
       <main className='.root'>
-          <button className='.button' onClick={handleNew}>New</button>
+          <button className='button' onClick={handleNew}>New</button>
+
+          <button className='button' onClick={handleQueryDelete}>Query Delete</button>
 
           <ul>
             {colors &&
               colors.map((color)=>(
                 <li key={color.id}>
-                  <a href="#">edit</a>
+                  <button className='button2' onClick={() => handleEdit(color.id)}>edit</button>
+                  <button className='button2' onClick={() => handleDelete(color.id)}>delete</button>
                   <Dot color={color.value} /> {color.name}
             </li>
               ))

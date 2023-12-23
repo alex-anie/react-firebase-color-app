@@ -4,5 +4,13 @@
 }
 
 .button {
-    font-size: 40px;
+    font-size: 20px;
+    margin: 0px 10px;
+    background-color: rosybrown;
+
+}
+
+.button2 {
+    font-size: 20px;
+    margin: 0px 10px;
 }
