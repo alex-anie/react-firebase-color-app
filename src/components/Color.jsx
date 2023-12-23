@@ -4,7 +4,7 @@ import db from '../firebase'
 import './color.css'
 
 //::: i imported this function 
-import { onSnapshot, collection } from 'firebase/firestore'
+import { onSnapshot, collection, setDoc, doc, add } from 'firebase/firestore'
 
 const Dot = ({color})=> {
   const style = {
@@ -37,10 +37,16 @@ export default function Color() {
   []
   );
 
+  const handleNew = async () => {
+    const docRef = doc(db, "colors", "color001");
+    const payload = {name: "Black", value: "#000"};
+    await setDoc(docRef, payload);
+  }
+
   return (
     <>
       <main className='.root'>
-          <button className='.button'>New</button>
+          <button className='.button' onClick={handleNew}>New</button>
 
           <ul>
             {colors &&
