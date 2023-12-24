@@ -1,4 +1,4 @@
-import {collection, addDoc, setDoc, getDocs, doc, deleteDoc, query, where } from 'firebase/firestore';
+import {collection, addDoc, updateDoc, getDocs, doc, deleteDoc, query, where, serverTimestamp } from 'firebase/firestore';
 import db from "../firebase";
 
 export const handleNew = async () => {
@@ -6,7 +6,7 @@ export const handleNew = async () => {
     const value = prompt("Enter color value")
 
     const collectionRef = collection(db, "colors");
-    const payload = {name, value};
+    const payload = {name, value, timestamp: serverTimestamp()};
 
    const docRef = await addDoc(collectionRef, payload);
 
@@ -17,8 +17,8 @@ export const handleEdit = async(id) => {
     const value = prompt("Enter color value")
 
     const docRef = doc(db, "colors", id);
-    const payload = {name, value}
-    setDoc(docRef, payload)
+    const payload = {name, value, timestamp: serverTimestamp()}
+    updateDoc(docRef, payload)
   }
 
   export const handleDelete = async (id)=> {
